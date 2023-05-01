@@ -8,7 +8,9 @@ public class Aim : MonoBehaviour
     public float inverse;
     [SerializeField] Transform _arm;
     [SerializeField] float _offset = -90;
-    Character character;
+    public Character character;
+    CharacterFlying characterFlying;
+    ToAnotherPlanetTrigger flying;
 
     #region
     void Start()

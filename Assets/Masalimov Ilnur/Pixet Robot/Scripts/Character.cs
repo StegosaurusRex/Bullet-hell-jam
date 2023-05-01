@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     public List<GameObject> unlockedWeapons; // List of closed cannons
     public GameObject[] allWeapons; // All guns
     public Image weaponsIcon; // Cannon icon
+    public ToAnotherPlanetTrigger flyingBool;
 
     void Start()
     {
@@ -32,90 +33,103 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-
-        // Decrease timer that disables input movement. Used when attacking
-        m_disableMovementTimer -= Time.deltaTime;
-
-        //Check if character just landed on the ground
-        if (!m_grounded && m_groundSensor.State())
+        if (flyingBool.isFlying == true)
         {
-            m_grounded = true;
-            m_animator.SetBool("Grounded", m_grounded);
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+
+            Vector2 movement = new Vector2(horizontalInput , verticalInput);
+            m_body2d.velocity = movement * m_maxSpeed;
+
+
         }
-
-        //Check if character just started falling
-        if (m_grounded && !m_groundSensor.State())
-        {
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-        }
-
-        // -- Handle input and movement --
-        float inputX = 0.0f;
-
-        if (m_disableMovementTimer < 0.0f)
-            inputX = Input.GetAxis("Horizontal");
-
-        // GetAxisRaw returns either -1, 0 or 1
-        float inputRaw = Input.GetAxisRaw("Horizontal");
-        // Check if current move input is larger than 0 and the move direction is equal to the characters facing direction
-        if (Mathf.Abs(inputRaw) > Mathf.Epsilon)
-            m_moving = true;
 
         else
-            m_moving = false;
-
-        // Swap direction of sprite depending on move direction
-        if (!m_facingRight && inputRaw > 0)
         {
-            Flip();
-            //m_facingDirection = 1;
-        }
+            // Decrease timer that disables input movement. Used when attacking
+            m_disableMovementTimer -= Time.deltaTime;
 
-        else if (m_facingRight && inputRaw < 0)
-        {
-            Flip();
-            //m_facingDirection = -1;
-        }
+            //Check if character just landed on the ground
+            if (!m_grounded && m_groundSensor.State())
+            {
+                m_grounded = true;
+                m_animator.SetBool("Grounded" , m_grounded);
+            }
 
-        // SlowDownSpeed helps decelerate the characters when stopping
-        float SlowDownSpeed = m_moving ? 1.0f : 0.5f;
-        // Set movement
-        m_body2d.velocity = new Vector2(inputX * m_maxSpeed * SlowDownSpeed, m_body2d.velocity.y);
+            //Check if character just started falling
+            if (m_grounded && !m_groundSensor.State())
+            {
+                m_grounded = false;
+                m_animator.SetBool("Grounded" , m_grounded);
+            }
 
-        // Set AirSpeed in animator
-        m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
+            // -- Handle input and movement --
+            float inputX = 0.0f;
 
-        //Death
-        //if (Input.GetKeyDown("e"))
+            if (m_disableMovementTimer < 0.0f)
+                inputX = Input.GetAxis("Horizontal");
+
+            // GetAxisRaw returns either -1, 0 or 1
+            float inputRaw = Input.GetAxisRaw("Horizontal");
+            // Check if current move input is larger than 0 and the move direction is equal to the characters facing direction
+            if (Mathf.Abs(inputRaw) > Mathf.Epsilon)
+                m_moving = true;
+
+            else
+                m_moving = false;
+
+            // Swap direction of sprite depending on move direction
+            if (!m_facingRight && inputRaw > 0)
+            {
+                Flip();
+                //m_facingDirection = 1;
+            }
+
+            else if (m_facingRight && inputRaw < 0)
+            {
+                Flip();
+                //m_facingDirection = -1;
+            }
+
+            // SlowDownSpeed helps decelerate the characters when stopping
+            float SlowDownSpeed = m_moving ? 1.0f : 0.5f;
+            // Set movement
+            m_body2d.velocity = new Vector2(inputX * m_maxSpeed * SlowDownSpeed , m_body2d.velocity.y);
+
+            // Set AirSpeed in animator
+            m_animator.SetFloat("AirSpeedY" , m_body2d.velocity.y);
+
+            //Death
+            //if (Input.GetKeyDown("e"))
             //m_animator.SetTrigger("Death");
 
-        //Run
-        if (m_moving)
-            m_animator.SetInteger("AnimState", 1);
+            //Run
+            if (m_moving)
+                m_animator.SetInteger("AnimState" , 1);
 
-        //Jump
-        if (Input.GetButtonDown("Jump"))
-        {
-            m_animator.SetTrigger("Jump");
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-        }
+            //Jump
+            if (Input.GetButtonDown("Jump"))
+            {
+                m_animator.SetTrigger("Jump");
+                m_grounded = false;
+                m_animator.SetBool("Grounded" , m_grounded);
+            }
 
-        //Run
-        else if (m_moving)
-            m_animator.SetInteger("AnimState", 1);
-
-
-        //Idle
-        else
-            m_animator.SetInteger("AnimState", 0);
+            //Run
+            else if (m_moving)
+                m_animator.SetInteger("AnimState" , 1);
 
 
-        // Recharge
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SwithWeapon();
+            //Idle
+            else
+                m_animator.SetInteger("AnimState" , 0);
+
+
+            // Recharge
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                SwithWeapon();
+            }
         }
     }
 
