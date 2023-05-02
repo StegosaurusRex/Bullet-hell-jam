@@ -55,7 +55,7 @@ public class PlaneFlying : MonoBehaviour
         animator.SetTrigger("Fly");
 
         yield return new WaitForSeconds(3f);
-        Destroy(plane);
+        
 
     }
     public void DisablePlaneFly()

@@ -45,6 +45,7 @@ public class ToAnotherPlanetTrigger : MonoBehaviour
         if (playerInTrigger && Input.GetKey(KeyCode.E)) // Check if the player is in the trigger area and the E key is pressed
         {
             // Get a reference to the script component
+            
             PlaneFlying flyingScript = planeFly.GetComponent<PlaneFlying>();
             Animator LevelAnim = level.GetComponent<Animator>();
             Animator SkyAnim = sky.GetComponent<Animator>();
@@ -56,6 +57,7 @@ public class ToAnotherPlanetTrigger : MonoBehaviour
             isFlying = true;
             // Enable the script component
             flyingScript.enabled = true;
+            
             planeThrusters.SetActive(true);
             StartCoroutine(DisablePlayer());
         }
