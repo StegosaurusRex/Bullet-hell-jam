@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
 {
-    
-    
-    public float speed = 0.5f; // Скорость движения слоя
-    public float movingDistance = 0.5f; // Скорость движения слоя
 
-    private float startPosition; // Начальная позиция слоя
-
-    private void Start()
+    Material material;
+    Vector2 offset;
+    public int xVelocity, yVelocity;
+    private void Awake()
     {
-        startPosition = transform.position.x;
+        material = GetComponent<Renderer>().material;
     }
-
     private void Update()
     {
-        // Смещаем объект влево на заданную скорость
-        float newPosition = Mathf.Repeat(Time.time * -speed , (transform.localScale.x*movingDistance));
-        transform.position = new Vector3(startPosition + newPosition , transform.position.y , transform.position.z);
+        offset = new Vector2(xVelocity , yVelocity);
+        material.mainTextureOffset += offset * Time.deltaTime;
     }
+
 }
