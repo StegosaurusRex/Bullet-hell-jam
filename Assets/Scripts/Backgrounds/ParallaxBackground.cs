@@ -8,6 +8,7 @@ public class ParallaxBackground : MonoBehaviour
     Material material;
     Vector2 offset;
     public int xVelocity, yVelocity;
+    public bool startScroll=false;
     private void Awake()
     {
         material = GetComponent<Renderer>().material;
@@ -15,7 +16,11 @@ public class ParallaxBackground : MonoBehaviour
     private void Update()
     {
         offset = new Vector2(xVelocity , yVelocity);
-        material.mainTextureOffset += offset * Time.deltaTime;
+        if (startScroll == true)
+        {
+            material.mainTextureOffset += offset * Time.deltaTime;
+        }
+        
     }
 
 }
