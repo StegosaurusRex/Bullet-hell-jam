@@ -17,7 +17,7 @@ public class ToAnotherPlanetTrigger : MonoBehaviour
     public GameObject space;
     public GameObject planeFly;
     public float time;//how much time for sky fall
-    bool playerInTrigger = false; // Flag to keep track of whether the player is in the trigger area
+    public bool playerInTrigger = false; // Flag to keep track of whether the player is in the trigger area
     private PlaneFlying planeFlying;
     private void Start()
     {

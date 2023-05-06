@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class PlayerHP : MonoBehaviour
 {
     public GameObject playerDeathAnim;
@@ -10,13 +11,14 @@ public class PlayerHP : MonoBehaviour
     public int startHp;
     public int hp;
     public TextMeshProUGUI hpText;
+
     public float bulletCooldown;
     public float timeToBlowUp;
     float bulletTimer;
     void Start()
     {
         hp = startHp;
-        hpText = GetComponent<TextMeshProUGUI>();
+        
         if (hpText == null)
         {
             Debug.LogError("TextMeshProUGUI component not found!");
@@ -27,10 +29,10 @@ public class PlayerHP : MonoBehaviour
         bulletTimer -= Time.deltaTime;
         if (hp <= 0)
         {
+            PlayerDeath();
             
-            StartCoroutine(DisableDeathAnim());
         }
-        hpText.text = "HP: " + hp.ToString();
+        hpText.text="HP: "+hp;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -41,13 +43,17 @@ public class PlayerHP : MonoBehaviour
             bulletTimer = bulletCooldown;
         }
     }
-    IEnumerator DisableDeathAnim()
+    IEnumerator DeathAnim()
     {
         playerDeathAnim.SetActive(true);
         yield return new WaitForSeconds(timeToBlowUp);
         playerDeathAnimExit.SetActive(false);
         player.SetActive(false);
 
+    }
+    public void PlayerDeath()
+    {
+        StartCoroutine(DeathAnim());
     }
 
 }
