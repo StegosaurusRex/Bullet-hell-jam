@@ -13,7 +13,7 @@ public class ParallaxBackground : MonoBehaviour
     ToAnotherPlanetTrigger toAnotherPlanetTrigger;
     private void Start()
     {
-
+        toAnotherPlanetTrigger = GameObject.FindObjectOfType<ToAnotherPlanetTrigger>();
     }
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class ParallaxBackground : MonoBehaviour
     private void Update()
     {
         
-        if (toAnotherPlanetTrigger.playerInTrigger&& Input.GetKey(KeyCode.E))
+        if (toAnotherPlanetTrigger.isFlying==true)
         {
             StartCoroutine(StartScrolling());
         }

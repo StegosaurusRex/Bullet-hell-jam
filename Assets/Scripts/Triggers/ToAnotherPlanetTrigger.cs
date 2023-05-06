@@ -11,7 +11,7 @@ public class ToAnotherPlanetTrigger : MonoBehaviour
     public GameObject plane;
     public GameObject planeThrusters;
     public float disableTime;
-    public float scrollTime;
+    public float isFlyingOffTime;
     public GameObject level;
     public GameObject sky;
     public GameObject space;
@@ -69,15 +69,15 @@ public class ToAnotherPlanetTrigger : MonoBehaviour
     IEnumerator DisablePlayer()
     {
         PlaneFlying flyingScript = planeFly.GetComponent<PlaneFlying>();
-        ParallaxBackground parallaxBackground=GetComponent<ParallaxBackground>();
+
         player.SetActive(false);
         yield return new WaitForSeconds(disableTime);
         
         playerFlying.SetActive(true);
         playerFlying.transform.SetParent(null);
         flyingScript.enabled = false;
-        yield return new WaitForSeconds(scrollTime);
-        parallaxBackground.startScroll = true;
+        yield return new WaitForSeconds(isFlyingOffTime);
+        isFlying = false;
 
     }
 

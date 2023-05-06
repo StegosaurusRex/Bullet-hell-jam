@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerMovements : MonoBehaviour
 {
 
+
     public float speed;
     public GameObject jetpackActivation;
     // Start is called before the first frame update
@@ -17,6 +18,8 @@ public class PlayerMovements : MonoBehaviour
     {
         transform.position += new Vector3(Input.GetAxis("Horizontal") ,
             Input.GetAxis("Vertical"))*speed*Time.deltaTime;
+        // Shoot on left mouse button click
+        
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             jetpackActivation.SetActive(true);
@@ -27,5 +30,6 @@ public class PlayerMovements : MonoBehaviour
         }
         
     }
+
 }
 

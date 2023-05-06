@@ -6,16 +6,16 @@ public class TimerScript : MonoBehaviour
     public float startTime = 900f; // 15 minutes in seconds
     private float currentTime;
     public TextMeshProUGUI timerText;
-
+    PlayerHP playerHP;
     void Start()
     {
         currentTime = startTime;
-        
+        playerHP = GameObject.FindObjectOfType<PlayerHP>();
     }
 
     void Update()
     {
-        if (currentTime > 0f)
+        if (currentTime >= 0f)
         {
             currentTime -= Time.deltaTime;
             int minutes = Mathf.FloorToInt(currentTime / 60f);
@@ -24,7 +24,7 @@ public class TimerScript : MonoBehaviour
         }
         else
         {
-            PlayerHP playerHP = GetComponent<PlayerHP>();
+            
             playerHP.PlayerDeath();
             // Timer has run out
             Debug.Log("Time's up!");

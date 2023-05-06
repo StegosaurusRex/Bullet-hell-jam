@@ -28,10 +28,7 @@ public class PlaneFlying : MonoBehaviour
             Vector2 movement = new Vector2(horizontalInput , verticalInput);
             rb.velocity = movement * speed;
 
-            if (stopFly==true) // Check if the spacebar is pressed
-            {
-                
-            }
+
             // Shoot on left mouse button click
             if (Input.GetButtonDown("Fire1"))
             {
