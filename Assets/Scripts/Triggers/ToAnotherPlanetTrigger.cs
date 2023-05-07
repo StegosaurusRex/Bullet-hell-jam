@@ -5,6 +5,7 @@ using UnityEngine;
 public class ToAnotherPlanetTrigger : MonoBehaviour
 {
     public bool isFlying;
+    public bool isThirdLevel=false;
     public GameObject player;
     public GameObject playerFlying;
 
@@ -78,7 +79,7 @@ public class ToAnotherPlanetTrigger : MonoBehaviour
         flyingScript.enabled = false;
         yield return new WaitForSeconds(isFlyingOffTime);
         isFlying = false;
-
+        isThirdLevel = true;
     }
 
 }

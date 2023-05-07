@@ -15,9 +15,9 @@ MonoBehaviour:
   bulletResource: {fileID: 5435418405761391244, guid: b2fdb938a84f7b149bbcba37130e524d, type: 3}
   minRotation: 0
   maxRotation: 180
-  numberOfBullets: 8
+  numberOfBullets: 6
   isRandom: 0
   isParent: 1
-  cooldown: 0.2
-  bulletSpeed: 5
+  cooldown: 0.81
+  bulletSpeed: 81.5
   bulletVelocity: {x: 1, y: 0}
