@@ -8,7 +8,8 @@ public class ToAnotherPlanetTrigger : MonoBehaviour
     public bool isThirdLevel=false;
     public GameObject player;
     public GameObject playerFlying;
-
+    public GameObject bulletSpawner;
+    public float bossStartShooting;
     public GameObject plane;
     public GameObject planeThrusters;
     public float disableTime;
@@ -80,6 +81,9 @@ public class ToAnotherPlanetTrigger : MonoBehaviour
         yield return new WaitForSeconds(isFlyingOffTime);
         isFlying = false;
         isThirdLevel = true;
+        
+        yield return new WaitForSeconds(bossStartShooting);
+        bulletSpawner.SetActive(true);
     }
 
 }

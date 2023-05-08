@@ -14,18 +14,12 @@ public class CameraOutOfBounds : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        float cameraHeight = 2f * mainCamera.orthographicSize;
-        float cameraWidth = cameraHeight * mainCamera.aspect;
-        float xMin = mainCamera.transform.position.x - cameraWidth / 2f + buffer;
-        float xMax = mainCamera.transform.position.x + cameraWidth / 2f - buffer;
-        float yMin = mainCamera.transform.position.y - mainCamera.orthographicSize + buffer;
-        float yMax = mainCamera.transform.position.y + mainCamera.orthographicSize - buffer;
+        Vector3 minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(0 , 0 , 0));
+        Vector3 maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width , Screen.height , 0));
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x , xMin , xMax) ,
-                                         Mathf.Clamp(transform.position.y , yMin , yMax) ,
-                                         transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x , minScreenBounds.x + 1 , maxScreenBounds.x - 1) , Mathf.Clamp(transform.position.y , minScreenBounds.y + 1 , maxScreenBounds.y - 3) , transform.position.z);
     }
 
 }

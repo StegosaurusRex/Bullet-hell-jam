@@ -6,9 +6,11 @@ public class GameManager : MonoBehaviour
 {
     PlayerHP playerHP;
     PlaneHP planeHP;
+    BossHP bossHP;
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
-    public GameObject crosshairPauseMenuUI;
+
+    public GameObject crosshair;
     public float timeToDeath;
     public float timeToWin;
     public GameObject pauseMenuUIGameOver;
@@ -17,6 +19,7 @@ public class GameManager : MonoBehaviour
     {
         playerHP = GameObject.FindObjectOfType<PlayerHP>();
         planeHP = GameObject.FindObjectOfType<PlaneHP>();
+        bossHP = GameObject.FindObjectOfType<BossHP>();
     }
     void Update()
     {
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
         {
             if (GameIsPaused)
             {
+                
                 Resume();
             }
             else
@@ -40,17 +44,17 @@ public class GameManager : MonoBehaviour
         {
             PauseGameOver();
         }
-        //if (bossHP=<0)
-        //{
-        //    PauseWinGame();
-        //}
+        if (bossHP.hp<=0)
+        {
+           PauseWinGame();
+        }
     }
 
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
 
-        crosshairPauseMenuUI.SetActive(true);
+        crosshair.SetActive(true);
         Time.timeScale = 1f;
         Cursor.visible = false;
         GameIsPaused = false;
@@ -60,7 +64,8 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
-        crosshairPauseMenuUI.SetActive(false);
+        Cursor.visible = true;
+        crosshair.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
 
@@ -92,7 +97,7 @@ public class GameManager : MonoBehaviour
         
         yield return new WaitForSeconds(timeToDeath);
         pauseMenuUIGameOver.SetActive(true);
-        crosshairPauseMenuUI.SetActive(false);
+        crosshair.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
 
@@ -101,10 +106,9 @@ public class GameManager : MonoBehaviour
     {
         
         yield return new WaitForSeconds(timeToWin);
-        pauseMenuUIWinGame.SetActive(true);
-        crosshairPauseMenuUI.SetActive(false);
+        crosshair.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
-
+        SceneManager.LoadScene(2);
     }
 }

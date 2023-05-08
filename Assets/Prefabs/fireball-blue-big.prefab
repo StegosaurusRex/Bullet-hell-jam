@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 212396194626849566}
   - component: {fileID: 6777746275618543967}
   - component: {fileID: -2343492492564099611}
+  - component: {fileID: 5039458205348098891}
   m_Layer: 7
   m_Name: fireball-blue-big
   m_TagString: PlayerBullet
@@ -125,3 +126,19 @@ MonoBehaviour:
   whatIsSolid:
     serializedVersion: 2
     m_Bits: 8
+--- !u!58 &5039458205348098891
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019480068096796}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.045

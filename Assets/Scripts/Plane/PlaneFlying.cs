@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlaneFlying : MonoBehaviour
 {
+    public AudioClip shotSound; // Add this variable for the shot sound
+    private AudioSource audioSource; // Add this variable for playing the sound
     public bool stopFly=false;
     public float force = 10f; // The force to apply to the object
     private Rigidbody2D rb;
@@ -16,6 +18,7 @@ public class PlaneFlying : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>(); // Get the audio source component
     }
     void Update()
     {
@@ -32,6 +35,7 @@ public class PlaneFlying : MonoBehaviour
             // Shoot on left mouse button click
             if (Input.GetButtonDown("Fire1"))
             {
+                
                 Shoot();
             }
         }
@@ -40,6 +44,8 @@ public class PlaneFlying : MonoBehaviour
     void Shoot()
     {
         Instantiate(bulletPrefab , firePoint.position , transform.rotation);
+        // Play the shot sound
+        audioSource.PlayOneShot(shotSound);
     }
 
     IEnumerator DisablePlane()
@@ -48,9 +54,10 @@ public class PlaneFlying : MonoBehaviour
         yield return new WaitForSeconds(disableTime);
         stopFly = true;
         Animator animator = GetComponent<Animator>();
-
+        // Get the script component on the object
+        CameraOutOfBounds script = GetComponent<CameraOutOfBounds>();
         animator.SetTrigger("Fly");
-
+        script.enabled = false;
         yield return new WaitForSeconds(3f);
         
 
