@@ -16,8 +16,11 @@ public class BossHP : MonoBehaviour
     public float bulletCooldown;
     public float timeToBlowUp;
     float bulletTimer;
+    public AudioClip impactShotSound;
+    private AudioSource audioSource; // Add this variable for playing the sound
     void Start()
     {
+        audioSource = GetComponent<AudioSource>(); // Get the audio source component
         hp = startHp;
         toAnotherPlanetTrigger = FindAnyObjectByType<ToAnotherPlanetTrigger>();
     }
@@ -41,7 +44,9 @@ public class BossHP : MonoBehaviour
             hp -= 1;
             print(hp);
             bulletTimer = bulletCooldown;
+            
             Destroy(collision.gameObject);
+            audioSource.PlayOneShot(impactShotSound);
         }
     }
     IEnumerator DeathAnim()

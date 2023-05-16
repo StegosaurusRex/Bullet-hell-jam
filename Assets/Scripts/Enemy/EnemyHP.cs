@@ -10,15 +10,22 @@ public class EnemyHP : MonoBehaviour
     public GameObject enemy;
     public int startHp;
     public int hp;
-
+    public AudioClip impactShotSound;
+    private AudioSource audioSource; // Add this variable for playing the sound
 
     public float bulletCooldown;
     public float timeToBlowUp;
+    public float timeToSpawnNewEnemy;
+
+
+
     float bulletTimer;
+
     void Start()
     {
         hp = startHp;
         
+        audioSource = GetComponent<AudioSource>(); // Get the audio source component
     }
     void Update()
     {
@@ -37,6 +44,7 @@ public class EnemyHP : MonoBehaviour
             print(hp);
             bulletTimer = bulletCooldown;
             Destroy(collision.gameObject);
+            audioSource.PlayOneShot(impactShotSound);
         }
     }
     IEnumerator DeathAnim()
@@ -45,11 +53,12 @@ public class EnemyHP : MonoBehaviour
         yield return new WaitForSeconds(timeToBlowUp);
         enemyDeathAnimExit.SetActive(false);
         enemy.SetActive(false);
-
+        yield return new WaitForSeconds(timeToSpawnNewEnemy);
+        
     }
     public void EnemyDeath()
     {
         StartCoroutine(DeathAnim());
     }
-
+    
 }

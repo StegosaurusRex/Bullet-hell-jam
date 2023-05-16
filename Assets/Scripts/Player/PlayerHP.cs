@@ -11,14 +11,15 @@ public class PlayerHP : MonoBehaviour
     public int startHp;
     public int hp;
     public TextMeshProUGUI hpText;
-
+    public AudioSource audioSource;
+    public AudioClip impactShotSound; // Add this variable for the shot sound
     public float bulletCooldown;
     public float timeToBlowUp;
     float bulletTimer;
     void Start()
     {
         hp = startHp;
-        
+        audioSource = GetComponent<AudioSource>(); // Get the audio source component
         if (hpText == null)
         {
             Debug.LogError("TextMeshProUGUI component not found!");
@@ -41,6 +42,7 @@ public class PlayerHP : MonoBehaviour
             hp -= 1;
             print(hp);
             bulletTimer = bulletCooldown;
+            audioSource.PlayOneShot(impactShotSound);
         }
     }
     IEnumerator DeathAnim()

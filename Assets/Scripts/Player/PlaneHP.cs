@@ -11,14 +11,18 @@ public class PlaneHP : MonoBehaviour
     public int startHp;
     public int hp;
     public TextMeshProUGUI hpText;
-
+    public AudioClip shotSound; // Add this variable for the shot sound
+    private AudioSource audioSource; // Add this variable for playing the sound
     public float bulletCooldown;
     public float timeToBlowUp;
     float bulletTimer;
+    ToAnotherPlanetTrigger toAnotherPlanetTrigger;
+    public AudioClip impactShotSound; // Add this variable for the shot sound
     void Start()
     {
+        toAnotherPlanetTrigger = FindAnyObjectByType<ToAnotherPlanetTrigger>();
         hp = startHp;
-        
+        audioSource = GetComponent<AudioSource>(); // Get the audio source component
         if (hpText == null)
         {
             Debug.LogError("TextMeshProUGUI component not found!");
@@ -36,11 +40,12 @@ public class PlaneHP : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Bullet" && bulletTimer <= 0)
+        if (collision.tag == "Bullet" && bulletTimer <= 0&&toAnotherPlanetTrigger.isFlying==true)
         {
             hp -= 1;
             print(hp);
             bulletTimer = bulletCooldown;
+            audioSource.PlayOneShot(impactShotSound);
         }
     }
     IEnumerator DeathAnim()

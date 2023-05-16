@@ -15,6 +15,8 @@ public class PlaneFlying : MonoBehaviour
     public GameObject plane;
     public Transform firePoint;
     public ToAnotherPlanetTrigger flyingBool;
+    public float shotCooldown = 0.5f; // The time between shots
+    private float shotTimer = 0f; // The time since the last shot
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,7 +24,7 @@ public class PlaneFlying : MonoBehaviour
     }
     void Update()
     {
-        if (flyingBool.isFlying == true&&stopFly==false)
+        if (flyingBool.isFlying == true && stopFly == false)
         {
 
             float horizontalInput = Input.GetAxis("Horizontal");
@@ -32,14 +34,21 @@ public class PlaneFlying : MonoBehaviour
             rb.velocity = movement * speed;
 
 
-            // Shoot on left mouse button click
-            if (Input.GetButtonDown("Fire1"))
+            // Check if enough time has passed since the last shot
+            if (shotTimer <= 0f && Input.GetButton("Fire1"))
             {
-                
+                // Fire the bullet and reset the timer
                 Shoot();
+                shotTimer = shotCooldown;
+            }
+            else
+            {
+                // Decrease the timer
+                shotTimer -= Time.deltaTime;
+
             }
         }
-    }
+        }
 
     void Shoot()
     {
